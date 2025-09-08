@@ -3,6 +3,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const JWT_SECRET = process.env.JWT_SECRET
+
 const register = (req, res) => {
   const { username,email,password } = req.body;
 
@@ -34,11 +36,11 @@ const login = (req, res) => {
 
     const token = jwt.sign(
       { id: user.id, username: user.username, email: user.email },
-      process.env.JWT_SECRET,
+      JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES || "1h" }
     );
 
-    res.json({ username: user.username, email: user.email,token});
+    res.json({ username: user.username, email: user.email, token });
   });
 };
 
